@@ -12,11 +12,11 @@
                         <img src="<?=$post->user->profile->profileImage()?>" class=" rounded-circle w-100" style="max-width: 40px">
                     </div>
                     <div>
-                        <div class=" fw-bold">
+                        <div class=" fw-bold d-flex">
                             <a href="/profile/ {{ $post->user->id }}">
                                 <span class=" text-dark"><?=$post->user->username?></span>
                             </a>
-                            <a href="#" class=" ps-3"><?=$status?></a>
+                            <test stt="<?=$stt?>" class=" ms-3"></test>
                         </div>
                     </div>
                 </div>

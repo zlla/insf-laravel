@@ -10,7 +10,7 @@ class PostsController extends Controller
 {
     public function __construct()
     {
-         $this->middleware('auth');   
+        $this->middleware('auth');
     }
 
     public function index()
@@ -18,7 +18,7 @@ class PostsController extends Controller
         $user = auth()->user()->following()->pluck('profiles.user_id');
 
         $posts = Post::whereIn('user_id', $user)->orderBy('created_at', 'DESC')->get();
-    
+
         return view('posts.index', compact('posts'));
     }
 
@@ -31,12 +31,12 @@ class PostsController extends Controller
     {
         $data = request()->validate([
             'caption' => 'required',
-            'image' => ['required','image'],
+            'image' => ['required', 'image'],
         ]);
 
         $imagePath = request('image')->store('uploads', 'public');
 
-        $image = Image::make(public_path("storage/".$imagePath))->fit(1200, 1200);
+        $image = Image::make(public_path("storage/" . $imagePath))->fit(1200, 1200);
         $image->save();
 
         auth()->user()->posts()->create([
@@ -44,19 +44,18 @@ class PostsController extends Controller
             'image' => $imagePath,
         ]);
 
-        return redirect('/profile/' .auth()->user()->id);
+        return redirect('/profile/' . auth()->user()->id);
     }
 
     public function show(\App\Models\Post $post)
     {
         $status = (auth()->user()) ? auth()->user()->following->contains($post->user->id) : false;
         if ($status != false) {
-            $status = 'Unfollow';
-        }
-        else {
-            $status = 'follow';
+            $stt = '';
+        } else {
+            $stt = 'follow';
         }
 
-        return view('posts.show', compact('post', 'status'));
+        return view('posts.show', compact('post', 'stt'));
     }
 }
